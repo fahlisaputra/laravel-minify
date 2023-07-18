@@ -28,6 +28,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Minify Assets Resources 
+    |--------------------------------------------------------------------------
+    |
+    | This option enables minification of the assets inside the resources/
+    | directory. Only css and js files will be minified. These optimizations
+    | have little impact on php processing time.
+    |
+    | Place your assets in the resources/js or resources/css directory and
+    | they will be minified and served from the _minify route.
+    |
+    | Default: false
+    |
+    */
+    "assets_enabled" => env("MINFY_ASSETS_ENABLED", true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Automatic Insert Semicolon
     |--------------------------------------------------------------------------
     |

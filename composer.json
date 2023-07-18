@@ -26,6 +26,9 @@
   },
   "license": "MIT",
   "autoload": {
+    "files": [
+      "src/Helpers.php"
+    ],
     "psr-4": {
       "Fahlisaputra\\Minify\\": "src/"
     }

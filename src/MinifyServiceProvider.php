@@ -21,6 +21,7 @@ class MinifyServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->registerPublishables();
+        $this->registerRoutes();
     }
 
     /**
@@ -42,7 +43,8 @@ class MinifyServiceProvider extends BaseServiceProvider
     }
 
     public function registerRoutes() {
-        RouteFacade::get('/_minify/{file}', HttpConnectionHandler::class)
+        RouteFacade::get('/_minify/{file?}', HttpConnectionHandler::class)
+            ->where('file', '(.*)')
             ->name('minify.assets');
     }
 }
