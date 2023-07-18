@@ -30,7 +30,7 @@
       "Fahlisaputra\\Minify\\": "src/"
     }
   },
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
     "laravel": {
