@@ -1,0 +1,41 @@
+{
+  "name": "fahlisaputra/laravel-minify",
+  "description": "Minify your blade views, html, css and js files on the fly for Laravel 6, 7, 8, 9 and 10",
+  "keywords": [
+    "laravel",
+    "html-minifier",
+    "css-minifier",
+    "js-minifier",
+    "js-obsfucator"
+  ],
+  "authors": [
+    {
+      "name": "fahlisaputra",
+      "email": "saputra@fahli.net"
+    },
+    {
+      "name": "DulLah",
+      "email": "dulah755@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2.5 || ^8.0",
+    "illuminate/support": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
+    "illuminate/http": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
+    "illuminate/view": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Fahlisaputra\\Minify\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Fahlisaputra\\Minify\\MinifyServiceProvider"
+      ]
+    }
+  }
+}
