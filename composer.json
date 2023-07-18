@@ -6,7 +6,7 @@
     "html-minifier",
     "css-minifier",
     "js-minifier",
-    "js-obsfucator"
+    "js-obfuscate"
   ],
   "authors": [
     {

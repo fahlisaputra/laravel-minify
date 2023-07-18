@@ -1,7 +1,4 @@
 <?php
-
-namespace Fahlisaputra\Minify;
-
 function MinifyAsset($file) {
     $path = resource_path($file);
     if (!file_exists($path)) {

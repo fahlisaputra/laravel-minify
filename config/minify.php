@@ -74,16 +74,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Obsfucate Javascript
+    | Obfuscate Javascript
     |--------------------------------------------------------------------------
     |
-    | This option will obsfucate the javascript code. This may cause an error
+    | This option will obfuscate the javascript code. This may cause an error
     | if the code is not written properly. Please use with caution!
     |
     | Default: false
     |
     */
-    "obsfucate" => env("MINIFY_OBSFUCATE", false),
+    "obfuscate" => env("MINIFY_OBFUSCATE", true),
 
     /*
     |--------------------------------------------------------------------------

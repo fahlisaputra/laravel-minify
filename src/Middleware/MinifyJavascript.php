@@ -13,7 +13,7 @@ class MinifyJavascript extends Minifier
     {
         static::$javascript = new Javascript();
         static::$minifyJavascriptHasBeenUsed = true;
-        $obfuscate = (bool) config("minify.obsfucate", false);
+        $obfuscate = (bool) config("minify.obfuscate", false);
         static::$allowInsertSemicolon = (bool) config("minify.insert_semicolon.js", true);
         foreach ($this->getByTag("script") as $el)
         {
