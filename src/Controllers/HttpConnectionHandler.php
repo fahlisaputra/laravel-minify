@@ -9,7 +9,7 @@ class HttpConnectionHandler {
     public function __invoke($file) {
         $js_insert_semicolon = (bool) config("minify.insert_semicolon.js", true);
         $css_insert_semicolon = (bool) config("minify.insert_semicolon.css", true);
-        $obsfucate = (bool) config("minify.obsfucate", false);
+        $obfuscate = (bool) config("minify.obfuscate", false);
         $enabled = (bool) config("minify.assets_enabled", true);
 
         $css = new CSS();
@@ -31,7 +31,7 @@ class HttpConnectionHandler {
                 $content = $css->replace($content, $css_insert_semicolon);
             } else if (preg_match("/\.js$/", $file)) {
                 $content = $js->replace($content, $js_insert_semicolon);
-                if ($obsfucate) {
+                if ($obfuscate) {
                     $content = $js->obfuscate($content);
                 }
             }
