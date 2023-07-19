@@ -173,11 +173,6 @@ You can skip minify by route by adding the route name to the `ignore` array in t
 ## License
 Laravel Minify is licensed under the [MIT license](LICENSE).
 
-## Credits
-- [Fahli Saputra](https://github.com/fahlisaputra)
-- [:D](https://github.com/dz-id)
-- [Spentura](https://spentura.com)
-
 ## Support
 If you are having general issues with this package, feel free to contact us on [saputra@fahli.net](mailto:saputra@fahli.net)
 
