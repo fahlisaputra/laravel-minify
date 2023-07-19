@@ -17,7 +17,7 @@ class Javascript
         $patternRegex = [
             '#(?:({|\[|\(|,|;|=>|\:|\?|\.))$#',
             '#^\s*$#',
-            '#^(do|else)$#'
+            '#^(do|else)$#',
         ];
 
         $loop = 0;
@@ -56,7 +56,7 @@ class Javascript
                     }
 
                     if ($insert) {
-                        if (preg_match("#(?:\\})$#", trim($line)) && preg_match("#^(else|elseif|else\s*if|catch)#", $c)) {
+                        if (preg_match('#(?:\\})$#', trim($line)) && preg_match("#^(else|elseif|else\s*if|catch)#", $c)) {
                             $insert = false;
                         }
                     }
@@ -66,7 +66,7 @@ class Javascript
             }
 
             if ($insert) {
-                $result[] = sprintf("%s;", $line);
+                $result[] = sprintf('%s;', $line);
             } else {
                 $result[] = $line;
             }
@@ -90,13 +90,13 @@ class Javascript
             // Minify object attribute(s) except JSON attribute(s). From `{'foo':'bar'}` to `{foo:'bar'}`
             '#([\{,])([\'])(\d+|[a-z_][a-z0-9_]*)\2(?=\:)#i',
             // --ibid. From `foo['bar']` to `foo.bar`
-            '#([a-z0-9_\)\]])\[([\'"])([a-z_][a-z0-9_]*)\2\]#i'
+            '#([a-z0-9_\)\]])\[([\'"])([a-z_][a-z0-9_]*)\2\]#i',
         ], [
             '$1',
             '$1$2',
             '}',
             '$1$3',
-            '$1.$3'
+            '$1.$3',
         ], $value));
     }
 
