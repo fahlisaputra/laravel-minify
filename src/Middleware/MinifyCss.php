@@ -7,17 +7,16 @@ use Fahlisaputra\Minify\Helpers\CSS;
 class MinifyCss extends Minifier
 {
     protected static $allowInsertSemicolon;
-    protected static $css;
 
     protected function apply()
     {
-        static::$css = new CSS();
         static::$minifyCssHasBeenUsed = true;
-        static::$allowInsertSemicolon = (bool) config("minify.insert_semicolon.css", true);
+        static::$allowInsertSemicolon = (bool) config("minify.insert_semicolon.css", false);
+        $css = new CSS();
 
         foreach ($this->getByTag("style") as $el)
         {
-            $value = $this->css->replace($el->nodeValue, $this->allowInsertSemicolon);
+            $value = $css->replace($el->nodeValue, static::$minifyCssHasBeenUsed);
 
             $el->nodeValue = "";
             $el->appendChild(static::$dom->createTextNode($value));

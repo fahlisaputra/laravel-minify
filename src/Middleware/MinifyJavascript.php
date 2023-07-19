@@ -7,20 +7,20 @@ use Fahlisaputra\Minify\Helpers\Javascript;
 class MinifyJavascript extends Minifier
 {
     protected static $allowInsertSemicolon;
-    protected static $javascript;
 
     protected function apply()
     {
-        static::$javascript = new Javascript();
         static::$minifyJavascriptHasBeenUsed = true;
+        static::$allowInsertSemicolon = (bool) config("minify.insert_semicolon.js", false);
+        $javascript = new Javascript();
         $obfuscate = (bool) config("minify.obfuscate", false);
-        static::$allowInsertSemicolon = (bool) config("minify.insert_semicolon.js", true);
+
         foreach ($this->getByTag("script") as $el)
         {
-            $value = $this->javascript->replace($el->nodeValue, $this->allowInsertSemicolon);
+            $value = $javascript->replace($el->nodeValue, static::$allowInsertSemicolon);
             if ($obfuscate)
             {
-                $value = $this->javascript->obfuscate($value);
+                $value = $javascript->obfuscate($value);
             }
             $el->nodeValue = "";
             $el->appendChild(static::$dom->createTextNode($value));
