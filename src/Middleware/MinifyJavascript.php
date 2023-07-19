@@ -11,18 +11,16 @@ class MinifyJavascript extends Minifier
     protected function apply()
     {
         static::$minifyJavascriptHasBeenUsed = true;
-        static::$allowInsertSemicolon = (bool) config("minify.insert_semicolon.js", false);
+        static::$allowInsertSemicolon = (bool) config('minify.insert_semicolon.js', false);
         $javascript = new Javascript();
-        $obfuscate = (bool) config("minify.obfuscate", false);
+        $obfuscate = (bool) config('minify.obfuscate', false);
 
-        foreach ($this->getByTag("script") as $el)
-        {
+        foreach ($this->getByTag('script') as $el) {
             $value = $javascript->replace($el->nodeValue, static::$allowInsertSemicolon);
-            if ($obfuscate)
-            {
+            if ($obfuscate) {
                 $value = $javascript->obfuscate($value);
             }
-            $el->nodeValue = "";
+            $el->nodeValue = '';
             $el->appendChild(static::$dom->createTextNode($value));
         }
 

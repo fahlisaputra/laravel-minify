@@ -24,11 +24,11 @@ return [
     | Default: true
     |
     */
-    "enabled" => env("MINFY_ENABLED", true),
+    'enabled' => env('MINFY_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
-    | Minify Assets Resources 
+    | Minify Assets Resources
     |--------------------------------------------------------------------------
     |
     | This option enables minification of the assets inside the resources/
@@ -41,7 +41,7 @@ return [
     | Default: false
     |
     */
-    "assets_enabled" => env("MINFY_ASSETS_ENABLED", false),
+    'assets_enabled' => env('MINFY_ASSETS_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,9 +55,9 @@ return [
     | Default: false
     |
     */
-    "insert_semicolon" => [
-        'css' => env("MINIFY_CSS_SEMICOLON", false),
-        'js' => env("MINIFY_JS_SEMICOLON", false),
+    'insert_semicolon' => [
+        'css' => env('MINIFY_CSS_SEMICOLON', false),
+        'js'  => env('MINIFY_JS_SEMICOLON', false),
     ],
 
     /*
@@ -70,7 +70,7 @@ return [
     | Default: true
     |
     */
-    "remove_comments" => env("MINIFY_REMOVE_COMMENTS", true),
+    'remove_comments' => env('MINIFY_REMOVE_COMMENTS', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +83,7 @@ return [
     | Default: false
     |
     */
-    "obfuscate" => env("MINIFY_OBFUSCATE", true),
+    'obfuscate' => env('MINIFY_OBFUSCATE', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -94,10 +94,10 @@ return [
     | '*' as wildcard.
     |
     */
- 
-    "ignore" => [
-     //   "*/download/*",
-     //   "admin/*",
-     //   "*/user"
+
+    'ignore' => [
+        //   "*/download/*",
+        //   "admin/*",
+        //   "*/user"
     ],
 ];
