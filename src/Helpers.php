@@ -1,6 +1,6 @@
 <?php
 
-function MinifyAsset($file)
+function minify($file)
 {
     $path = resource_path($file);
     if (!file_exists($path)) {
