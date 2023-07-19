@@ -70,7 +70,7 @@ $ composer require fahlisaputra/laravel-minify
 Laravel Minify supports optional configuration. To get started, you'll need to publish all vendor assets:
 
 ```sh
-$ php artisan vendor:publish --provider="Fahlisaputra\LaravelMinify\MinifyServiceProvider"
+$ php artisan vendor:publish --provider="Fahlisaputra\Minify\MinifyServiceProvider"
 ```
 
 This will create a config/minify.php file in your app that you can modify to set your configuration. Also, make sure you check for changes to the original config file in this package between releases.
