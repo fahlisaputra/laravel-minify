@@ -11,14 +11,13 @@ class MinifyCss extends Minifier
     protected function apply()
     {
         static::$minifyCssHasBeenUsed = true;
-        static::$allowInsertSemicolon = (bool) config("minify.insert_semicolon.css", false);
+        static::$allowInsertSemicolon = (bool) config('minify.insert_semicolon.css', false);
         $css = new CSS();
 
-        foreach ($this->getByTag("style") as $el)
-        {
+        foreach ($this->getByTag('style') as $el) {
             $value = $css->replace($el->nodeValue, static::$minifyCssHasBeenUsed);
 
-            $el->nodeValue = "";
+            $el->nodeValue = '';
             $el->appendChild(static::$dom->createTextNode($value));
         }
 
