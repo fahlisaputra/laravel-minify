@@ -5,6 +5,7 @@ namespace Fahlisaputra\Minify;
 use Fahlisaputra\Minify\Controllers\HttpConnectionHandler;
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Fahlisaputra\Minify\Exceptions\InvalidMinifyException;
 
 class MinifyServiceProvider extends BaseServiceProvider
 {
@@ -46,7 +47,10 @@ class MinifyServiceProvider extends BaseServiceProvider
 
     public function registerRoutes()
     {
-        RouteFacade::get('/_minify/{file?}', HttpConnectionHandler::class)
+        // get the route prefix from the config file
+        $prefix = config('minify.route_prefix', '_minify');
+
+        RouteFacade::get('/' . $prefix . '/{file?}', HttpConnectionHandler::class)
             ->where('file', '(.*)')
             ->name('minify.assets');
     }

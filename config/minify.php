@@ -24,7 +24,7 @@ return [
     | Default: true
     |
     */
-    'enabled' => env('MINFY_ENABLED', true),
+    'enabled' => env('MINIFY_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return [
     | Default: false
     |
     */
-    'assets_enabled' => env('MINFY_ASSETS_ENABLED', false),
+    'assets_enabled' => env('MINIFY_ASSETS_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,6 +84,33 @@ return [
     |
     */
     'obfuscate' => env('MINIFY_OBFUSCATE', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Route Prefix
+    |--------------------------------------------------------------------------
+    |
+    | This option allows you to specify a route prefix for the minify route.
+    | For example, if the route prefix is set to "_minify", then the minify
+    | route will be accessible at http://example.com/_minify/{hash}
+    |
+    | Default: "_minify"
+    |
+    */
+    'route_prefix' => env('MINIFY_ROUTE_PREFIX', '_minify'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Assets Caching
+    |--------------------------------------------------------------------------
+    |
+    | This option allows you to specify a cache lifetime for the minified
+    | assets. The default is 1 week. Set to false to disable caching.
+    |
+    | Default: 604800
+    |
+    */
+    'cache_lifetime' => env('MINIFY_CACHE_LIFETIME', 604800),
 
     /*
     |--------------------------------------------------------------------------
