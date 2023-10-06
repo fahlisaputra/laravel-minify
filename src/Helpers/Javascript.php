@@ -102,20 +102,7 @@ class Javascript
 
     public function obfuscate($value)
     {
-        $ords = [];
-
-        for ($i = 0; $i < strlen($value); $i++) {
-            $ords[] = ord($value[$i]);
-        }
-
-        $template = sprintf("
-        eval(((_, __, ___, ____, _____, ______, _______) => {
-            ______[___](x => _______[__](String[____](x)));
-            return _______[_](_____)
-        })('join', 'push', 'forEach', 'fromCharCode', '', %s, []))
-
-        ", json_encode($ords));
-
-        return $this->replace($template);
+        $obfuscator = new JsObfuscator($value);
+        return $obfuscator->Obfuscate();
     }
 }
