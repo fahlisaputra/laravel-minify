@@ -103,6 +103,7 @@ class Javascript
     public function obfuscate($value)
     {
         $obfuscator = new JsObfuscator($value);
+
         return $obfuscator->Obfuscate();
     }
 }
