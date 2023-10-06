@@ -42,7 +42,7 @@ class HttpConnectionHandler
         $mime = mime_content_type($path);
 
         return response($content, 200, [
-            'Content-Type' => $mime,
+            'Content-Type' => $mime.'; charset=UTF-8',
         ]);
     }
 }
