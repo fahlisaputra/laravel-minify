@@ -1,7 +1,11 @@
 
-# Laravel Minify
 
-Laravel Minify is a package for minifying and obfuscating Javascript, CSS, HTML and Blade template files. It runs automatically when you load a page or view. This package can minify entire response and also can minify blade at compile time.
+
+<img width="150" src="assets/minify_logo.svg" alt="Logo">
+
+# Minify for Laravel
+
+Minify for Laravel is a package for minifying and obfuscating Javascript, CSS, HTML and Blade views. It runs automatically when you load a page or view. Increase your website performance on page load and save bandwidth. Obfuscate your Javascript to protect your code from being stolen.
 
 <p align="left">
 <a href="https://packagist.org/packages/fahlisaputra/laravel-minify"><img src="http://poser.pugx.org/fahlisaputra/laravel-minify/v" alt="Latest Stable Version"></a>
@@ -10,111 +14,62 @@ Laravel Minify is a package for minifying and obfuscating Javascript, CSS, HTML 
 <a href="https://github.styleci.io/repos/667860309?branch=main"><img src="https://github.styleci.io/repos/667860309/shield?branch=main" alt="StyleCI"></a>
 </p>
 
-## Examples:
+## Comparison
 
-#### HTML
-- Before Minify
+This image shows the difference in size between the original file and the minified file of default welcome.blade.php Laravel. The original file size is 28.7 KB and the minified file size is 25.7 KB. The minified file size is 10% smaller than the original file size.
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Laravel Minify</title>
-    <style>
-        h2 {
-            color: red;
-            background-color: yellow;
-        }
-    </style>
-</head>
-<body>
-    <h2>Laravel Minify</h2>
-    <p>Laravel Minify is a package for minifying and obfuscating Javascript, CSS, HTML and Blade template files.</p>
-    <script>
-        function helloWorld() {
-            alert('Hello World');
-        }
-    </script>
-</body>
-</html>
-```
+<img width="100%" src="assets/comparison.png" alt="Logo">
 
-- After Minify
-
-```html
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><title>Laravel Minify</title><style>h2{color:red;;background-color:yellow;}</style></head><body><h2>Laravel Minify</h2><p>Laravel Minify is a package for minifying and obfuscating Javascript, CSS, HTML and Blade template files.</p><script>eval(((_,__,___,____,_____,______,_______)=>{______[___](x=>_______[__](String[____](x)));return _______[_](_____)})('join','push','forEach','fromCharCode','',[102,117,110,99,116,105,111,110,32,104,101,108,108,111,87,111,114,108,100,40,41,123,97,108,101,114,116,40,39,72,101,108,108,111,32,87,111,114,108,100,39,41,125],[]));</script></body></html>
-```
-
-#### Javascript Obfuscate
-- Before Obfuscate
-
-```javascript
-function helloWorld() {
-    const number1 = 5;
-    const number2 = 10;
-    alert('Hello World! ' + (number1 + number2));
-}
-```
-
-- After Obfuscate
-
-```javascript
-eval(((_,__,___,____,_____,______,_______)=>{______[___](x=>_______[__](String[____](x)));return _______[_](_____)})('join','push','forEach','fromCharCode','',[102,117,110,99,116,105,111,110,32,104,101,108,108,111,87,111,114,108,100,40,41,123,99,111,110,115,116,32,110,117,109,98,101,114,49,61,53,59,99,111,110,115,116,32,110,117,109,98,101,114,50,61,49,48,59,97,108,101,114,116,40,39,72,101,108,108,111,32,87,111,114,108,100,33,32,39,43,40,110,117,109,98,101,114,49,43,110,117,109,98,101,114,50,41,41,125],[]));
-```
-
+If you minify all your asset files, you can save up to 50% of your bandwidth. This will make your website load faster and save your hosting cost. When you have big files, the difference in size will be even greater.
 
 ## Installation
 
-Laravel Minify requires PHP 7.2 or higher. This particular version supports Laravel 6.x, 7.x, 8.x, 9.x, and 10.x only. 
+Minify for Laravel requires PHP 7.2 or higher. This particular version supports Laravel 8.x, 9.x, and 10.x. 
 
 To get the latest version, simply require the project using [Composer](https://getcomposer.org):
 
 ```sh
-$ composer require fahlisaputra/laravel-minify
+composer require fahlisaputra/laravel-minify
 ```
 ## Configuration
-Laravel Minify supports optional configuration. To get started, you'll need to publish all vendor assets:
+Minify for Laravel supports optional configuration. To get started, you'll need to publish all vendor assets:
 
 ```sh
-$ php artisan vendor:publish --provider="Fahlisaputra\Minify\MinifyServiceProvider"
+php artisan vendor:publish --provider="Fahlisaputra\Minify\MinifyServiceProvider"
 ```
 
 This will create a config/minify.php file in your app that you can modify to set your configuration. Also, make sure you check for changes to the original config file in this package between releases.
 
 ## Register the Middleware
-In order Laravel Minify can intercept your request to minify and obfuscate, you need to add the Minify middleware to the `app/Http/Kernel.php` file:
+In order Minify for Laravel can intercept your request to minify and obfuscate, you need to add the Minify middleware to the `app/Http/Kernel.php` file:
 
 ```php
 protected $middleware = [
     ....
-    // Middleware to minify html
+    // Middleware to minify CSS
     \Fahlisaputra\Minify\Middleware\MinifyCss::class,
-    // Middleware to minify css
+    // Middleware to minify Javascript
     \Fahlisaputra\Minify\Middleware\MinifyJavascript::class,
-    // Middleware to minify javascript
+    // Middleware to minify Blade
     \Fahlisaputra\Minify\Middleware\MinifyHtml::class,
 ];
 ```
 You can choose which middleware you want to use. Put all of them if you want to minify html, css, and javascript at the same time.
 
 ## Usage
-This is how you can use Laravel Minify in your project. 
+This is how you can use Minify for Laravel in your project. 
 ### Enable Minify
 You can enable minify by setting `minify` to `true` in the `config/minify.php` file. For example:
 
 ```php
-"enabled" => env("MINFY_ENABLED", true),
+"enabled" => env("MINIFY_ENABLED", true),
 ```
 
 ### Minify Asset Files
 You must set `true` on `assets_enabled` in the `config/minify.php` file to minify your asset files. For example:
 
 ```php
-"assets_enabled" => env("MINFY_ASSETS_ENABLED", true),
+"assets_enabled" => env("MINIFY_ASSETS_ENABLED", true),
 ```
 
 You can minify your asset files by using the `minify()` helper function. This function will minify your asset files and return the minify designed route. In order to work properly, you need to put your asset files in the `resources/js` or  `resources/css` directory. For example:
@@ -132,7 +87,7 @@ where `test.css` is located in the `resources/css` directory.
 where `test.js` is located in the `resources/js` directory.
 
 ### Automatic Insert Semicolon on Javascript or CSS
-You can enable automatic insert semicolon on javascript or css by setting `true` on `insert_semicolon` in the `config/minify.php` file. For example:
+Use this option if Minify for Laravel makes your javascript or css not working properly. You can enable automatic insert semicolon on javascript or css by setting `true` on `insert_semicolon` in the `config/minify.php` file. For example:
 
 ```php
 "insert_semicolon" => [
@@ -140,7 +95,7 @@ You can enable automatic insert semicolon on javascript or css by setting `true`
     'js' => env("MINIFY_JS_SEMICOLON", true),
 ],
 ```
-Please note: this feature is still experimental. It may not work properly and may cause errors to your javascript or css.
+Caution: this option is experimental. If the code still not working properly, you can disable this option and add semicolon manually to your Javascript or CSS code.
 
 ### Skip Minify on Blade
 You can skip minify on blade by using attribute `ignore--minify` inside script or style tag. For example:
