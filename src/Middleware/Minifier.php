@@ -37,10 +37,9 @@ abstract class Minifier
 
         if (!$this->shouldProcessMinify($request, $response)) {
             if (!(static::$dom instanceof DOMDocument)) {
-                return $response; 
+                return $response;
             }
         }
-
 
         $html = $response->getContent();
         $this->loadDom($html);
