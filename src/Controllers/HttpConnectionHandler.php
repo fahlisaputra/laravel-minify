@@ -27,19 +27,21 @@ class HttpConnectionHandler
         }
 
         $content = file_get_contents($path);
+        $mime = 'text/plain';
 
+        // due to support only for css and js (issue #9)
         if ($enabled) {
             if (preg_match("/\.css$/", $file)) {
                 $content = $css->replace($content, $css_insert_semicolon);
+                $mime = 'text/css';
             } elseif (preg_match("/\.js$/", $file)) {
                 $content = $js->replace($content, $js_insert_semicolon);
                 if ($obfuscate) {
                     $content = $js->obfuscate($content);
                 }
+                $mime = 'application/javascript';
             }
         }
-
-        $mime = mime_content_type($path);
 
         return response($content, 200, [
             'Content-Type' => $mime.'; charset=UTF-8',
