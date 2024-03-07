@@ -100,4 +100,19 @@ return [
         //   "admin/*",
         //   "*/user"
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Directives Replacement
+    |--------------------------------------------------------------------------
+    |
+    | Here you can specify the directives that you want to replace. For example,
+    | you can replace the @ symbol with x-on: for AlpineJS with '@' => 'x-on:'.
+    | Minify use preg_replace to replace the directives.
+    |
+    */
+
+    'directives' => [
+        '@' => 'x-on:',
+    ],
 ];
