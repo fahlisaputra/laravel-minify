@@ -113,6 +113,6 @@ return [
     */
 
     'directives' => [
-        "@" => "x-on:",
+        '@' => 'x-on:',
     ],
 ];
