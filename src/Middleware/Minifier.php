@@ -42,6 +42,16 @@ abstract class Minifier
         }
 
         $html = $response->getContent();
+
+        // replace custom directives, issue #12
+        $directives = config('minify.directives', []);
+        foreach ($directives as $search => $replace) {
+            // check if $search is a valid regex
+            if (@preg_match($search, null) !== false) {
+                $html = preg_replace($search, $replace, $html);
+            }
+        }
+
         $this->loadDom($html);
 
         return $response->setContent($this->apply());
