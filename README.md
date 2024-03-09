@@ -127,11 +127,11 @@ You can skip minify by route by adding the route name to the `ignore` array in t
 ```
 
 ### Custom Directives Replacement
-You can replace custom directives by adding the directive name to the `custom_directives` array in the `config/minify.php` file. For example in AlpineJS you can write `@click="function()"`. Unfortunately, Minify for Laravel will remove the `@` symbol. You can replace it by adding `@ => x-click:`  to the `directives` array. For example:
+You can replace custom directives by adding the directive name to the `custom_directives` array in the `config/minify.php` file. For example in AlpineJS you can write `@click="function()"`. Unfortunately, Minify for Laravel will remove the `@` symbol. You can replace it by adding `'/@/' => 'x-on:'`  to the `directives` array. For example:
 
 ```php
 "directives" => [
-    '@' => 'x-on:',
+    '/@/' => 'x-on:',
 ],
 ```
 
