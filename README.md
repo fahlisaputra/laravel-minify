@@ -137,7 +137,7 @@ You can replace custom directives by adding the directive name to the `custom_di
 
 ## Known Issues
 
-- Minify for Laravel will remove the `@` symbol in the blade file. This will make the blade directive not working properly. You can fix this by adding `@ => x-on:` to the `directives` array in the `config/minify.php` file.
+- Minify for Laravel will remove the `@` symbol in the blade file. This will make the blade directive not working properly. You can fix this by adding `'/@/' => 'x-on:'` to the `directives` array in the `config/minify.php` file.
 - Does not support for some Javascript framework. You can try experiment by changing the `insert_semicolon` option to `true` or `false` in the `config/minify.php` file.
 
 ## Contributing
