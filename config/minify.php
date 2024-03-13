@@ -129,7 +129,7 @@ return [
     */
 
     'directives' => [
-        "@" => 'x-on:',
+        '@' => 'x-on:',
     ],
 
     /*
@@ -144,6 +144,6 @@ return [
     */
 
     'keep_directives' => [
-        '@vite'
-    ]
+        '@vite',
+    ],
 ];

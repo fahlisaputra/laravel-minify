@@ -50,8 +50,8 @@ abstract class Minifier
         return $response->setContent($this->apply());
     }
 
-    protected function replaceDirectives($html) : string {
-
+    protected function replaceDirectives($html): string
+    {
         if (!config('minify.enable_directive_replacement', false)) {
             return $html;
         }
@@ -63,7 +63,7 @@ abstract class Minifier
         $keepDirectivesKeys = config('minify.keep_directives', []);
         $keepDirectives = [];
         foreach ($keepDirectivesKeys as $key) {
-            $keepDirectives[$key] = '____'. uniqid(). '____';
+            $keepDirectives[$key] = '____'.uniqid().'____';
             $body[1] = str_replace($key, $keepDirectives[$key], $body[1]);
         }
 
@@ -79,7 +79,7 @@ abstract class Minifier
         }
 
         // rejoin the html
-        $html = $body[0]. '<body'. $body[1];
+        $html = $body[0].'<body'.$body[1];
 
         return $html;
     }
