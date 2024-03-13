@@ -43,18 +43,45 @@ abstract class Minifier
 
         $html = $response->getContent();
 
-        // replace custom directives, issue #12
-        $directives = config('minify.directives', []);
-        foreach ($directives as $search => $replace) {
-            // check if $search is a valid regex
-            if (@preg_match($search, null) !== false) {
-                $html = preg_replace($search, $replace, $html);
-            }
-        }
+        $html = self::replaceDirectives($html);
 
         $this->loadDom($html);
 
         return $response->setContent($this->apply());
+    }
+
+    protected function replaceDirectives($html) : string {
+
+        if (!config('minify.enable_directive_replacement', false)) {
+            return $html;
+        }
+
+        // split the html into head and body
+        $body = explode('<body', $html);
+
+        // mask the directive that want to keep, solution by @SaeedHeydari #12
+        $keepDirectivesKeys = config('minify.keep_directives', []);
+        $keepDirectives = [];
+        foreach ($keepDirectivesKeys as $key) {
+            $keepDirectives[$key] = '____'. uniqid(). '____';
+            $body[1] = str_replace($key, $keepDirectives[$key], $body[1]);
+        }
+
+        // replace custom directives, issue #12
+        $directives = config('minify.directives', []);
+        foreach ($directives as $search => $replace) {
+            $body[1] = str_replace($search, $replace, $body[1]);
+        }
+
+        // unmask the directive that want to keep
+        foreach ($keepDirectives as $replace => $search) {
+            $body[1] = str_replace($search, $replace, $body[1]);
+        }
+
+        // rejoin the html
+        $html = $body[0]. '<body'. $body[1];
+
+        return $html;
     }
 
     protected function shouldProcessMinify($request, $response): bool
