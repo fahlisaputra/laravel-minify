@@ -103,16 +103,47 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Enable Directive Replacement
+    |--------------------------------------------------------------------------
+    |
+    | Known issue: Minify for Laravel will replace all unnecessary characters
+    | in the HTML, including @.
+    |
+    | Here you can specify whether to enable directive replacement or not.
+    |
+    | Default: false
+    |
+    */
+
+    'enable_directive_replacement' => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | Custom Directives Replacement
     |--------------------------------------------------------------------------
     |
     | Here you can specify the directives that you want to replace. For example,
-    | you can replace the @ symbol with x-on: for AlpineJS with '@' => 'x-on:'.
-    | Minify use preg_replace to replace the directives.
+    | if you using AlpineJS with shorthand directive @click, you can replace it
+    | by adding '@' => 'x-on:' to the directives array.
     |
     */
 
     'directives' => [
         '@' => 'x-on:',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Keep Directives
+    |--------------------------------------------------------------------------
+    |
+    | Here you can specify the directives that you want to keep. For example,
+    | if you want to keep @vite directive, you can add '@vite' to the
+    | keep_directives array.
+    |
+    */
+
+    'keep_directives' => [
+        '@vite',
     ],
 ];

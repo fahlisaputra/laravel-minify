@@ -127,11 +127,20 @@ You can skip minify by route by adding the route name to the `ignore` array in t
 ```
 
 ### Custom Directives Replacement
-You can replace custom directives by adding the directive name to the `custom_directives` array in the `config/minify.php` file. For example in AlpineJS you can write `@click="function()"`. Unfortunately, Minify for Laravel will remove the `@` symbol. You can replace it by adding `@ => x-click:`  to the `directives` array. For example:
+You can replace custom directives by adding the directive name to the `directives` array in the `config/minify.php` file. For example in AlpineJS you can write `@click="function()"`. Unfortunately, Minify for Laravel will remove the `@` symbol. You can replace it by adding `@ => x-on:`  to the `directives` array. For example:
 
 ```php
 "directives" => [
     '@' => 'x-on:',
+],
+```
+
+### Keep Directives
+You can keep directives by adding the directive name to the `keep_directives` array in the `config/minify.php` file. For example when you use `@vite`, you can add `@vite` to the `keep_directives` array. For example:
+
+```php
+"keep_directives" => [
+    '@vite'
 ],
 ```
 
@@ -143,6 +152,10 @@ You can replace custom directives by adding the directive name to the `custom_di
 ## Contributing
 
 If you find an issue, or have a better way to do something, feel free to open an issue, or a pull request. The package is far from perfect, and any help is welcome. There are no formal contribution guidelines, and there should be no contribution too small. All coding styles will be fixed during the pull request by StyleCI. So, don't worry too much about the code style. We'd love to hear from you!
+
+## Thanks
+Big thanks to the people who have contributed to this package:
+- [@SaeedHeydari](https://github.com/SaeedHeydari)
 
 ## License
 Laravel Minify is licensed under the [MIT license](LICENSE).
