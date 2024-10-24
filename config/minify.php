@@ -80,7 +80,7 @@ return [
     | This option will obfuscate the javascript code. This may cause an error
     | if the code is not written properly. Please use with caution!
     |
-    | Default: false
+    | Default: true
     |
     */
     'obfuscate' => env('MINIFY_OBFUSCATE', true),
