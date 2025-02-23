@@ -54,7 +54,7 @@ class MinifyServiceProvider extends BaseServiceProvider
         }
 
         $path = config('minify.assets_route', '_minify');
-        RouteFacade::get('/_minify/{file?}', HttpConnectionHandler::class)
+        RouteFacade::get('/' . $path . '/{file?}', HttpConnectionHandler::class)
             ->where('file', '(.*)')
             ->name('minify.assets');
     }
