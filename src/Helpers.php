@@ -22,7 +22,7 @@ function minify(string $file): string
 
     // make sure the storage has trailing slash
     $realFilePath = rtrim($storage, '/').'/'.$file;
-    if (!file_exists($realFilePath)) {
+    if (!file_exists(base_path($realFilePath))) {
         throw new \Exception('Cannot create minified route. File '.$realFilePath.' not found');
     }
 
