@@ -4,10 +4,12 @@
  * Minify the given file path.
  *
  * @param string $file The file path to minify.
- * @return string The minified url.
+ *
  * @throws Exception
+ *
+ * @return string The minified url.
  */
-function minify(string $file) : string
+function minify(string $file): string
 {
     if (config('minify.assets_enabled') === false) {
         throw new \Exception('Minify assets is disabled');
