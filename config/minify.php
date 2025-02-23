@@ -64,6 +64,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Minify Assets Storage
+    |--------------------------------------------------------------------------
+    |
+    | This option specifies the storage path to save the unminified assets.
+    | You can modify this option to change the storage path. For example, you
+    | want to save the unminified assets in the `storage` directory.
+    |
+    | Default: resources
+    |
+    */
+
+    'assets_storage' => env('MINIFY_ASSETS_STORAGE', 'resources'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Automatic Insert Semicolon
     |--------------------------------------------------------------------------
     |
