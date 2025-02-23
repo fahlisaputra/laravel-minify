@@ -24,6 +24,7 @@ return [
     | Default: true
     |
     */
+
     'enabled' => env('MINIFY_ENABLED', true),
 
     /*
@@ -41,7 +42,25 @@ return [
     | Default: false
     |
     */
+
     'assets_enabled' => env('MINIFY_ASSETS_ENABLED', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Minify Assets Route
+    |--------------------------------------------------------------------------
+    |
+    | This option specifies the route to serve the minified assets.
+    | This route will be used to serve the minified assets from the
+    | resources directory.
+    |
+    | If the `assets_enabled` option is set to false, the route will not be
+    | registered.
+    |
+    | Default: _minify
+    |
+    */
+    'assets_route' => env('MINIFY_ASSETS_ROUTE', '_minify'),
 
     /*
     |--------------------------------------------------------------------------
