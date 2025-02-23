@@ -49,12 +49,12 @@ class MinifyServiceProvider extends BaseServiceProvider
 
     public function registerRoutes()
     {
-        if(!config('minify.assets_enabled', true)) {
+        if (!config('minify.assets_enabled', true)) {
             return;
         }
 
         $path = config('minify.assets_route', '_minify');
-        RouteFacade::get('/' . $path . '/{file?}', HttpConnectionHandler::class)
+        RouteFacade::get('/'.$path.'/{file?}', HttpConnectionHandler::class)
             ->where('file', '(.*)')
             ->name('minify.assets');
     }
