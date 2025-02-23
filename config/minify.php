@@ -36,14 +36,14 @@ return [
     | directory. Only css and js files will be minified. These optimizations
     | have little impact on php processing time.
     |
-    | Place your assets in the resources/js or resources/css directory and
-    | they will be minified and served from the _minify route.
+    | Place your assets in the `assets_storage` option directory and
+    | they will be minified and served from the `assets_route` configured route.
     |
-    | Default: false
+    | Default: true
     |
     */
 
-    'assets_enabled' => env('MINIFY_ASSETS_ENABLED', false),
+    'assets_enabled' => env('MINIFY_ASSETS_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
