@@ -27,7 +27,7 @@ function minify(string $file): string
     // remove slash or backslash from the beginning of the file path
     $file = ltrim($file, '/\\');
 
-    $path = route('minify.assets_route', ['file' => $file]);
+    $path = route('minify.assets', ['file' => $file]);
 
     return $path;
 }
