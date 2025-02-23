@@ -19,6 +19,9 @@ class HttpConnectionHandler
 
         $storage = config('minify.assets_storage', 'resources');
 
+        // remove slash or backslash from the beginning of the file path
+        $file = ltrim($file, '/\\');
+
         // make sure the storage has trailing slash
         $file = base_path(rtrim($storage, '/').'/'.$file);
 

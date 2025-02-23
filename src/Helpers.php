@@ -17,17 +17,14 @@ function minify(string $file): string
 
     $storage = config('minify.assets_storage', 'resources');
 
-    // make sure the storage has trailing slash
-    $file = base_path(rtrim($storage, '/').'/'.$file);
-
-    if (!file_exists($file)) {
-        throw new \Exception('Cannot create minified route. File '.$file.' not found');
-    }
-
     // remove slash or backslash from the beginning of the file path
     $file = ltrim($file, '/\\');
 
-    $path = route('minify.assets', ['file' => $file]);
+    // make sure the storage has trailing slash
+    $realFilePath = rtrim($storage, '/').'/'.$file;
+    if (!file_exists($realFilePath)) {
+        throw new \Exception('Cannot create minified route. File '.$realFilePath.' not found');
+    }
 
-    return $path;
+    return route('minify.assets', ['file' => $file]);
 }
