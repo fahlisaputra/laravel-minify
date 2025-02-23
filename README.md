@@ -8,9 +8,9 @@
 Minify for Laravel is a package for minifying and obfuscating Javascript, CSS, HTML and Blade views. It runs automatically when you load a page or view. Increase your website performance on page load and save bandwidth. Obfuscate your Javascript to protect your code from being stolen.
 
 <p align="left">
-<a href="https://packagist.org/packages/fahlisaputra/laravel-minify"><img src="http://poser.pugx.org/fahlisaputra/laravel-minify/v" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/fahlisaputra/laravel-minify"><img src="http://poser.pugx.org/fahlisaputra/laravel-minify/downloads" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/fahlisaputra/laravel-minify"><img src="http://poser.pugx.org/fahlisaputra/laravel-minify/license" alt="License"></a>
+<a href="https://packagist.org/packages/fahlisaputra/laravel-minify"><img src="https://img.shields.io/packagist/v/fahlisaputra/laravel-minify" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/fahlisaputra/laravel-minify"><img src="https://img.shields.io/packagist/dt/fahlisaputra/laravel-minify" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/fahlisaputra/laravel-minify"><img src="https://img.shields.io/packagist/l/fahlisaputra/laravel-minify" alt="License"></a>
 <a href="https://github.styleci.io/repos/667860309?branch=main"><img src="https://github.styleci.io/repos/667860309/shield?branch=main" alt="StyleCI"></a>
 </p>
 
