@@ -17,16 +17,19 @@ class HttpConnectionHandler
         $css = new CSS();
         $js = new Javascript();
 
-        $path = resource_path($file);
-        if (!file_exists($path)) {
+        $storage = config('minify.assets_storage', 'resources');
+
+        // remove slash or backslash from the beginning of the file path
+        $file = ltrim($file, '/\\');
+
+        // make sure the storage has trailing slash
+        $file = base_path(rtrim($storage, '/').'/'.$file);
+
+        if (!file_exists($file)) {
             return abort(404);
         }
 
-        if (!preg_match("/^(css|js)\//", $file)) {
-            return abort(404);
-        }
-
-        $content = file_get_contents($path);
+        $content = file_get_contents($file);
         $mime = 'text/plain';
 
         // due to support only for css and js (issue #9)

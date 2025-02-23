@@ -24,6 +24,7 @@ return [
     | Default: true
     |
     */
+
     'enabled' => env('MINIFY_ENABLED', true),
 
     /*
@@ -35,13 +36,46 @@ return [
     | directory. Only css and js files will be minified. These optimizations
     | have little impact on php processing time.
     |
-    | Place your assets in the resources/js or resources/css directory and
-    | they will be minified and served from the _minify route.
+    | Place your assets in the `assets_storage` option directory and
+    | they will be minified and served from the `assets_route` configured route.
     |
-    | Default: false
+    | Default: true
     |
     */
-    'assets_enabled' => env('MINIFY_ASSETS_ENABLED', false),
+
+    'assets_enabled' => env('MINIFY_ASSETS_ENABLED', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Minify Assets Route
+    |--------------------------------------------------------------------------
+    |
+    | This option specifies the route to serve the minified assets.
+    | This route will be used to serve the minified assets from the
+    | resources directory.
+    |
+    | If the `assets_enabled` option is set to false, the route will not be
+    | registered.
+    |
+    | Default: _minify
+    |
+    */
+    'assets_route' => env('MINIFY_ASSETS_ROUTE', '_minify'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Minify Assets Storage
+    |--------------------------------------------------------------------------
+    |
+    | This option specifies the storage path to save the unminified assets.
+    | You can modify this option to change the storage path. For example, you
+    | want to save the unminified assets in the `storage` directory.
+    |
+    | Default: resources
+    |
+    */
+
+    'assets_storage' => env('MINIFY_ASSETS_STORAGE', 'resources'),
 
     /*
     |--------------------------------------------------------------------------

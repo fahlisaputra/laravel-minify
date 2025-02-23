@@ -1,16 +1,30 @@
 <?php
 
-function minify($file)
+/**
+ * Minify the given file path.
+ *
+ * @param string $file The file path to minify.
+ *
+ * @throws Exception
+ *
+ * @return string The minified url.
+ */
+function minify(string $file): string
 {
-    $path = resource_path($file);
-    if (!file_exists($path)) {
-        throw new \Exception('File not found');
+    if (config('minify.assets_enabled') === false) {
+        throw new \Exception('Minify assets is disabled');
     }
+
+    $storage = config('minify.assets_storage', 'resources');
 
     // remove slash or backslash from the beginning of the file path
     $file = ltrim($file, '/\\');
 
-    $path = '_minify/'.$file;
+    // make sure the storage has trailing slash
+    $realFilePath = rtrim($storage, '/').'/'.$file;
+    if (!file_exists(base_path($realFilePath))) {
+        throw new \Exception('Cannot create minified route. File '.$realFilePath.' not found');
+    }
 
-    return $path;
+    return route('minify.assets', ['file' => $file]);
 }

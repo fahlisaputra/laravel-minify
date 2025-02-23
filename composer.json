@@ -1,6 +1,6 @@
 {
   "name": "fahlisaputra/laravel-minify",
-  "description": "Minify your blade views, html, css and js files on the fly for Laravel 6, 7, 8, 9 and 10",
+  "description": "Minify your blade views, html, css and obfuscate js files on the fly. Lightweight minifier for your Laravel project.",
   "keywords": [
     "laravel",
     "html-minifier",

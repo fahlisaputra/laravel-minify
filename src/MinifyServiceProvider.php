@@ -41,12 +41,20 @@ class MinifyServiceProvider extends BaseServiceProvider
 
     public function registerConfig()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/minify.php', 'minify.php');
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/minify.php',
+            'minify'
+        );
     }
 
     public function registerRoutes()
     {
-        RouteFacade::get('/_minify/{file?}', HttpConnectionHandler::class)
+        if (!config('minify.assets_enabled', true)) {
+            return;
+        }
+
+        $path = config('minify.assets_route', '_minify');
+        RouteFacade::get('/'.$path.'/{file?}', HttpConnectionHandler::class)
             ->where('file', '(.*)')
             ->name('minify.assets');
     }
