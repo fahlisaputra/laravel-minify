@@ -12,12 +12,12 @@ class HttpConnectionHandler
     {
         // Load configuration
         $config = [
-            'js_insert_semicolon' => (bool) config('minify.insert_semicolon.js', true),
+            'js_insert_semicolon'  => (bool) config('minify.insert_semicolon.js', true),
             'css_insert_semicolon' => (bool) config('minify.insert_semicolon.css', true),
-            'obfuscate' => (bool) config('minify.obfuscate', false),
-            'enabled' => (bool) config('minify.assets_enabled', true),
-            'storage' => config('minify.assets_storage', 'resources'),
-            'buildStorage' => config('minify.assets_build_storage', '/public/assets/_minify'),
+            'obfuscate'            => (bool) config('minify.obfuscate', false),
+            'enabled'              => (bool) config('minify.assets_enabled', true),
+            'storage'              => config('minify.assets_storage', 'resources'),
+            'buildStorage'         => config('minify.assets_build_storage', '/public/assets/_minify'),
         ];
 
         $css = new CSS();
@@ -30,7 +30,7 @@ class HttpConnectionHandler
         $cache = require $cacheFile;
         $cachedFile = $cache[$file] ?? null;
 
-        $realFilePath = base_path(rtrim($config['storage'], '/') . '/' . $file);
+        $realFilePath = base_path(rtrim($config['storage'], '/').'/'.$file);
         $buildFilePath = $cachedFile;
 
         if (!file_exists($realFilePath)) {
@@ -54,12 +54,11 @@ class HttpConnectionHandler
                 $ext = '';
             }
 
-            $cachedFile = Str::random('24') . $ext;
-            file_put_contents($config['buildStorage'] . '/' . $cachedFile, $content);
-            $cache[$file] = $config['buildStorage'] . '/' . $cachedFile;
+            $cachedFile = Str::random('24').$ext;
+            file_put_contents($config['buildStorage'].'/'.$cachedFile, $content);
+            $cache[$file] = $config['buildStorage'].'/'.$cachedFile;
             file_put_contents($cacheFile, $this->exportCache($cache));
-
-        }else if ($this->shouldReMinify($realFilePath, $buildFilePath, $cachedFile)) {
+        } elseif ($this->shouldReMinify($realFilePath, $buildFilePath, $cachedFile)) {
             $content = file_get_contents($realFilePath);
             $mime = 'text/plain';
 
@@ -75,12 +74,12 @@ class HttpConnectionHandler
                 $ext = '';
             }
 
-            $newFileName = Str::random('24') . $ext;
+            $newFileName = Str::random('24').$ext;
 
             // remove the old file
             unlink($buildFilePath);
 
-            $cachedFile = $config['buildStorage'] . '/' . $newFileName;
+            $cachedFile = $config['buildStorage'].'/'.$newFileName;
             file_put_contents($cachedFile, $content);
             $cache[$file] = $cachedFile;
             file_put_contents($cacheFile, $this->exportCache($cache));
@@ -96,13 +95,13 @@ class HttpConnectionHandler
             $content = file_get_contents($buildFilePath);
         }
 
-        return response($content, 200, ['Content-Type' => $mime . '; charset=UTF-8']);
+        return response($content, 200, ['Content-Type' => $mime.'; charset=UTF-8']);
     }
 
     private function ensureCacheFileExists($cacheFile)
     {
         if (!file_exists($cacheFile)) {
-            file_put_contents($cacheFile, "<?php\nreturn " . var_export([], true) . ";\n");
+            file_put_contents($cacheFile, "<?php\nreturn ".var_export([], true).";\n");
         }
     }
 
@@ -112,7 +111,7 @@ class HttpConnectionHandler
         $currentPath = '';
 
         foreach ($dirs as $dir) {
-            $currentPath .= $dir . '/';
+            $currentPath .= $dir.'/';
             if (!is_dir(base_path($currentPath))) {
                 mkdir(base_path($currentPath), 0755, true);
             }
@@ -150,6 +149,6 @@ class HttpConnectionHandler
 
     private function exportCache($cache)
     {
-        return "<?php\nreturn " . var_export($cache, true) . ";\n";
+        return "<?php\nreturn ".var_export($cache, true).";\n";
     }
 }

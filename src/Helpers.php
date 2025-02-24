@@ -19,7 +19,7 @@ function minify(string $file): string
     $cacheFile = storage_path('/framework/cache/minify.php');
 
     if (!file_exists($cacheFile)) {
-        file_put_contents($cacheFile, "<?php\nreturn " . var_export([], true) . ";\n");
+        file_put_contents($cacheFile, "<?php\nreturn ".var_export([], true).";\n");
     }
 
     // Normalize file path
@@ -28,7 +28,7 @@ function minify(string $file): string
     $cache = require $cacheFile;
     $cachedFile = $cache[$file] ?? null;
 
-    $realFilePath = base_path(rtrim($storage, '/') . '/' . $file);
+    $realFilePath = base_path(rtrim($storage, '/').'/'.$file);
     if (!file_exists($realFilePath)) {
         throw new \Exception("Cannot create minified route. File {$realFilePath} not found");
     }
