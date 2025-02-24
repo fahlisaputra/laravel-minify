@@ -76,7 +76,7 @@ return [
     */
 
     'assets_storage' => env('MINIFY_ASSETS_STORAGE', 'resources'),
-  
+
     /*
     |--------------------------------------------------------------------------
     | Minify Assets Build Storage
