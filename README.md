@@ -24,7 +24,7 @@ If you minify all your asset files, you can save up to 50% of your bandwidth. Th
 
 ## Installation
 
-Minify for Laravel requires PHP 7.2 or higher. This particular version supports Laravel 8.x, 9.x, 10.x, and 11.x.
+Minify for Laravel requires PHP 7.2 or higher. This particular version supports Laravel 8.x, 9.x, 10.x, 11.x, and 12.x.
 
 To get the latest version, simply require the project using [Composer](https://getcomposer.org):
 
