@@ -79,6 +79,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Minify Assets Build Storage
+    |--------------------------------------------------------------------------
+    |
+    | This option specifies the storage path to save the minified assets.
+    | Minify checks the timestamp of the assets to determine whether to
+    | re-minify the assets. If the assets are not modified, Minify will serve
+    | the minified assets from this directory, making it faster.
+    | This directory will be created on the public path.
+    |
+    | Default: assets/_minify
+    |
+    */
+
+    'assets_build_storage' => env('MINIFY_ASSETS_BUILD_STORAGE', 'assets/_minify'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Automatic Insert Semicolon
     |--------------------------------------------------------------------------
     |
