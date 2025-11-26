@@ -45,8 +45,8 @@ In order Minify for Laravel can intercept your request to minify and obfuscate, 
 ```php
 ->withMiddleware(function (Middleware $middleware) {
     $middleware->web(append: [
-        \Fahlisaputra\Minify\Middleware\MinifyHtml::class,
-        \Fahlisaputra\Minify\Middleware\MinifyCss::class,
+        \Fahlisaputra\Minify\Middleware\MinifyHtmlMiddleware::class,
+        \Fahlisaputra\Minify\Middleware\MinifyCssMiddleware::class,
         \Fahlisaputra\Minify\Middleware\MinifyJavascript::class,
     ]);
 })
@@ -59,11 +59,11 @@ In order Minify for Laravel can intercept your request to minify and obfuscate, 
 protected $middleware = [
     ....
     // Middleware to minify CSS
-    \Fahlisaputra\Minify\Middleware\MinifyCss::class,
+    \Fahlisaputra\Minify\Middleware\MinifyCssMiddleware::class,
     // Middleware to minify Javascript
     \Fahlisaputra\Minify\Middleware\MinifyJavascript::class,
     // Middleware to minify Blade
-    \Fahlisaputra\Minify\Middleware\MinifyHtml::class,
+    \Fahlisaputra\Minify\Middleware\MinifyHtmlMiddleware::class,
 ];
 ```
 You can choose which middleware you want to use. Put all of them if you want to minify html, css, and javascript at the same time.
