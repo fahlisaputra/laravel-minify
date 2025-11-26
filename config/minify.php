@@ -1,16 +1,18 @@
 <?php
 
 /*
- * This file is part of Laravel Minify.
- *
- * (c) Fahli Saputra <saputra@fahli.net>
- * (c) DulLah <dulah755@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+| Minify for Laravel
+|
+| Copyright (c) 2023–2025 Contributors
+| @see https://github.com/fahlisaputra/laravel-minify
+|
+| For the full copyright and license information,
+| please view the LICENSE file that was distributed
+| with this source code.
+*/
 
 return [
+
     /*
     |--------------------------------------------------------------------------
     | Minify Blade Views
@@ -26,73 +28,116 @@ return [
     |
     */
 
-    'enabled' => env('MINIFY_ENABLED', true),
+    'minify_blade' => env('MINIFY_BLADE_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
-    | Minify Assets Resources
+    | Minify Assets
     |--------------------------------------------------------------------------
     |
     | This option enables minification of the assets inside the resources/
-    | directory. Only css and js files will be minified. These optimizations
+    | directory. Only CSS and JS files will be minified. These optimizations
     | have little impact on php processing time.
     |
-    | Place your assets in the `assets_storage` option directory and
+    | Place your assets in the `assets_path` option directory, and
     | they will be minified and served from the `assets_route` configured route.
     |
     | Default: true
     |
     */
 
-    'assets_enabled' => env('MINIFY_ASSETS_ENABLED', true),
+    'minify_assets' => [
+
+        /*
+        | This option enables minification of the assets including CSS and JS files.
+        */
+
+        'enabled' => env('MINIFY_ASSETS_ENABLED', true),
+
+        /*
+        | This option specifies the storage path of the original assets to be minified.
+        | This is relative to the base path of the application.
+        */
+
+        'assets_path' => env('MINIFY_ASSETS_PATH', 'resources'),
+
+        /*
+        | This option specifies the route to serve the minified assets.
+        | Route will automatically be registered by the service provider.
+        */
+
+        'assets_route' =>  env('MINIFY_ASSETS_ROUTE', '_minify'),
+
+        /*
+        | Here you may configure the caching options for minified assets.
+        | Cache improves performance by storing minified assets and serving
+        | them from the cache directory if they have not been modified.
+        */
+
+        'cache' => [
+
+            /*
+            | This option enables caching of the minified assets
+            */
+
+            'enabled' => env('MINIFY_CACHE_ENABLED', true),
+
+            /*
+            | Specifies the storage path to save the minified assets.
+            | Minify checks the timestamp of the assets to determine whether to
+            | re-minify the assets. If the assets are not modified, Minify will serve
+            | the minified assets from this directory, making it faster.
+            |
+            | Note: This directory will be created on the public path.
+            */
+
+            'cache_path' => env('MINIFY_CACHE_PATH', 'assets/_minify'),
+
+        ],
+
+    ],
 
     /*
     |--------------------------------------------------------------------------
-    | Minify Assets Route
+    | Obfuscate JavaScript
     |--------------------------------------------------------------------------
     |
-    | This option specifies the route to serve the minified assets.
-    | This route will be used to serve the minified assets from the
-    | resources directory.
+    | This option will obfuscate the JavaScript code. This may cause an error
+    | if the code is not written properly. Please use with caution!
     |
-    | If the `assets_enabled` option is set to false, the route will not be
-    | registered.
-    |
-    | Default: _minify
-    |
-    */
-    'assets_route' => env('MINIFY_ASSETS_ROUTE', '_minify'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Minify Assets Storage
-    |--------------------------------------------------------------------------
-    |
-    | This option specifies the storage path to save the unminified assets.
-    | You can modify this option to change the storage path. For example, you
-    | want to save the unminified assets in the `storage` directory.
-    |
-    | Default: resources
+    | Default: true
     |
     */
 
-    'assets_storage' => env('MINIFY_ASSETS_STORAGE', 'resources'),
+    'obfuscate_js' => env('MINIFY_OBFUSCATE_JS', true),
 
     /*
     |--------------------------------------------------------------------------
     | Automatic Insert Semicolon
     |--------------------------------------------------------------------------
     |
-    | This option will automatically add semicolon at the end of the css and
-    | js code. This may cause an error if the code is not written properly.
+    | This option will automatically add semicolon at the end of the CSS and
+    | JS code. This may cause an error if the code is not written properly.
     | Please use with caution!
     |
     | Default: false
     |
     */
-    'insert_semicolon' => [
-        'css' => env('MINIFY_CSS_SEMICOLON', false),
-        'js'  => env('MINIFY_JS_SEMICOLON', false),
+
+    'auto_semicolon' => [
+
+        /*
+        | Automatically add semicolon at the end of the CSS code.
+        */
+
+        'css' => env('MINIFY_CSS_AUTO_SEMICOLON', false),
+
+        /*
+        | Automatically add semicolon at the end of the JS code.
+        */
+
+        'js'  => env('MINIFY_JS_AUTO_SEMICOLON', false),
+
     ],
 
     /*
@@ -105,20 +150,8 @@ return [
     | Default: true
     |
     */
-    'remove_comments' => env('MINIFY_REMOVE_COMMENTS', true),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Obfuscate Javascript
-    |--------------------------------------------------------------------------
-    |
-    | This option will obfuscate the javascript code. This may cause an error
-    | if the code is not written properly. Please use with caution!
-    |
-    | Default: true
-    |
-    */
-    'obfuscate' => env('MINIFY_OBFUSCATE', true),
+    'remove_comments' => env('MINIFY_REMOVE_COMMENTS', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -132,6 +165,7 @@ return [
     | Default: true
     |
     */
+
     'skip_ld_json' => env('MINIFY_SKIP_LD_JSON', true),
 
     /*
@@ -140,11 +174,11 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you can specify paths, which you don't want to minify. You can use
-    | '*' as wildcard.
+    | '*' as a wildcard.
     |
     */
 
-    'ignore' => [
+    'ignore_routes' => [
         //   "*/download/*",
         //   "admin/*",
         //   "*/user"
@@ -152,47 +186,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Enable Directive Replacement
-    |--------------------------------------------------------------------------
-    |
-    | Known issue: Minify for Laravel will replace all unnecessary characters
-    | in the HTML, including @.
-    |
-    | Here you can specify whether to enable directive replacement or not.
-    |
-    | Default: false
-    |
-    */
-
-    'enable_directive_replacement' => false,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Directives Replacement
+    | Directive Replacement
     |--------------------------------------------------------------------------
     |
     | Here you can specify the directives that you want to replace. For example,
-    | if you using AlpineJS with shorthand directive @click, you can replace it
-    | by adding '@' => 'x-on:' to the directives array.
+    | if you are using AlpineJS with shorthand directive @click, you can replace it
+    | by adding '@' => 'x-on:' to the directive array.
     |
     */
 
-    'directives' => [
-        '@' => 'x-on:',
-    ],
+    'directive_replacement' => [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Keep Directives
-    |--------------------------------------------------------------------------
-    |
-    | Here you can specify the directives that you want to keep. For example,
-    | if you want to keep @vite directive, you can add '@vite' to the
-    | keep_directives array.
-    |
-    */
+        'enabled' => false,
 
-    'keep_directives' => [
-        '@vite',
+        /*
+        | Directives that you want to be replaced
+        */
+        'replaces' => [
+            '@' => 'x-on:',
+        ],
+
+        /*
+        | Directives that you don't want to be replaced
+        */
+        'keep' => [
+            '@vite',
+        ],
+
     ],
 ];
