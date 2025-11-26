@@ -6,7 +6,7 @@
     </option>
   </component>
   <component name="LaravelIdeaMainSettings">
+    <option name="appDirectory" value="src" />
     <option name="frameworkFound" value="true" />
-    <option name="moduleSystemName" value="package" />
   </component>
 </project>

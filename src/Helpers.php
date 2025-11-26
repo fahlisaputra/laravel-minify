@@ -19,13 +19,19 @@ use Illuminate\Support\Facades\URL;
 function minify(string $file): string
 {
     // Check if minify assets feature is enabled
-    $assetsEnabled = config('minify.assets_enabled', config('minify.minify_assets', true));
+    $assetsEnabled = config('minify.minify_assets.enabled', config('minify.assets_enabled', true));
     if (!$assetsEnabled) {
         throw new \Exception('Minify assets is disabled in configuration.');
     }
 
     // Determine storage path (backward compatible)
-    $storage = config('minify.assets_storage', config('minify.assets_path', 'resources'));
+    $storage = config('minify.minify_assets.assets_path', config('minify.assets_storage', 'resources'));
+
+    $isCacheEnabled = config('minify.cache.enabled', false);
+    if (!$isCacheEnabled) {
+        // Directly return minify route if cache is disabled
+        return route('minify.assets', ['file' => $file]);
+    }
 
     // Ensure cache file exists
     $cacheFile = storage_path('framework/cache/minify.php');
