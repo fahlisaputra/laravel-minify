@@ -19,35 +19,61 @@ class HttpConnectionHandler
 
         $storage = config('minify.assets_storage', 'resources');
 
+        // the {file?} route parameter is optional and may be null
+        $file = (string) $file;
+
+        // null bytes are never valid in a path (realpath() throws on PHP 8+)
+        if (strpos($file, "\0") !== false) {
+            return abort(404);
+        }
+
         // remove slash or backslash from the beginning of the file path
         $file = ltrim($file, '/\\');
 
         // make sure the storage has trailing slash
         $file = base_path(rtrim($storage, '/').'/'.$file);
 
-        if (!file_exists($file)) {
+        // resolve "..", "." and symlinks, then only serve regular files that
+        // are inside the storage directory (prevents path traversal)
+        $storagePath = realpath(base_path(rtrim($storage, '/')));
+        $file = realpath($file);
+
+        if ($storagePath === false || $file === false || !is_file($file)
+            || strpos($file, rtrim($storagePath, '/\\').DIRECTORY_SEPARATOR) !== 0) {
+            return abort(404);
+        }
+
+        // only css and js assets are served (issue #9). Any other file in the
+        // storage directory (blade views, lang files, logs, keys, ...) must not
+        // be readable through the public assets route. The extension is taken
+        // from the resolved path, so a symlink cannot disguise another file.
+        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+        $mimes = [
+            'css' => 'text/css',
+            'js'  => 'application/javascript',
+        ];
+
+        if (!isset($mimes[$extension])) {
             return abort(404);
         }
 
         $content = file_get_contents($file);
-        $mime = 'text/plain';
+        $mime = $mimes[$extension];
 
-        // due to support only for css and js (issue #9)
         if ($enabled) {
-            if (preg_match("/\.css$/", $file)) {
+            if ($extension === 'css') {
                 $content = $css->replace($content, $css_insert_semicolon);
-                $mime = 'text/css';
-            } elseif (preg_match("/\.js$/", $file)) {
+            } else {
                 $content = $js->replace($content, $js_insert_semicolon);
                 if ($obfuscate) {
                     $content = $js->obfuscate($content);
                 }
-                $mime = 'application/javascript';
             }
         }
 
         return response($content, 200, [
-            'Content-Type' => $mime.'; charset=UTF-8',
+            'Content-Type'           => $mime.'; charset=UTF-8',
+            'X-Content-Type-Options' => 'nosniff',
         ]);
     }
 }

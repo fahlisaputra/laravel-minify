@@ -10,17 +10,17 @@ class MinifyCss extends Minifier
 
     protected function apply()
     {
-        static::$minifyCssHasBeenUsed = true;
+        $this->state->minifyCssHasBeenUsed = true;
         static::$allowInsertSemicolon = (bool) config('minify.insert_semicolon.css', false);
         $css = new CSS();
 
         foreach ($this->getByTag('style') as $el) {
-            $value = $css->replace($el->nodeValue, static::$minifyCssHasBeenUsed);
+            $value = $css->replace($el->nodeValue, $this->state->minifyCssHasBeenUsed);
 
             $el->nodeValue = '';
-            $el->appendChild(static::$dom->createTextNode($value));
+            $el->appendChild($this->state->dom->createTextNode($value));
         }
 
-        return static::$dom->saveHtml();
+        return $this->state->dom->saveHtml();
     }
 }
