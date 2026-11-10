@@ -13,6 +13,16 @@ Minify for Laravel is a package for minifying and obfuscating Javascript, CSS, H
 <a href="https://github.styleci.io/repos/667860309?branch=main"><img src="https://github.styleci.io/repos/667860309/shield?branch=main" alt="StyleCI"></a>
 </p>
 
+> [!CAUTION]
+> **Security update: please upgrade to v1.2.5 or later.**
+> Versions up to and including v1.2.4 contain several security vulnerabilities, including an unauthenticated path traversal in the assets route (`/_minify/{file}`) that allows reading arbitrary files such as `.env` ([GHSA-9xfr-hv5p-95rw](https://github.com/fahlisaputra/laravel-minify/security/advisories/GHSA-9xfr-hv5p-95rw)).
+>
+> ```sh
+> composer update fahlisaputra/laravel-minify
+> ```
+>
+> If you ran an affected version with the assets route enabled, **rotate your `APP_KEY`, database and mail passwords, and API keys.** See the [v1.2.5 release notes](https://github.com/fahlisaputra/laravel-minify/releases/tag/v1.2.5) for details and workarounds.
+
 ## Comparison
 
 This image shows the difference in size between the original file and the minified file of default welcome.blade.php Laravel. The original file size is 28.7 KB and the minified file size is 25.7 KB. The minified file size is 10% smaller than the original file size.
