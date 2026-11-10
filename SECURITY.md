@@ -6,6 +6,15 @@ We takes the security of our software products and services seriously, which inc
 
 If you believe you have found a security vulnerability in this project, please report it to us as described below.
 
+## Supported Versions
+
+| Version   | Supported          |
+| --------- | ------------------ |
+| >= 1.2.5  | :white_check_mark: |
+| < 1.2.5   | :x:                |
+
+Published security advisories are listed at https://github.com/fahlisaputra/laravel-minify/security/advisories.
+
 ## Reporting Security Issues
 
 **Please do not report security vulnerabilities through public GitHub issues.**
