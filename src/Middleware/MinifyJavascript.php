@@ -10,7 +10,7 @@ class MinifyJavascript extends Minifier
 
     protected function apply()
     {
-        static::$minifyJavascriptHasBeenUsed = true;
+        $this->state->minifyJavascriptHasBeenUsed = true;
         static::$allowInsertSemicolon = (bool) config('minify.insert_semicolon.js', false);
         $javascript = new Javascript();
         $obfuscate = (bool) config('minify.obfuscate', false);
@@ -27,10 +27,10 @@ class MinifyJavascript extends Minifier
                 $value = $javascript->obfuscate($value);
             }
             $el->nodeValue = '';
-            $el->appendChild(static::$dom->createTextNode($value));
+            $el->appendChild($this->state->dom->createTextNode($value));
         }
 
-        return static::$dom->saveHtml();
+        return $this->state->dom->saveHtml();
     }
 
     /**

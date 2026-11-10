@@ -12,9 +12,22 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class Minifier
 {
-    protected static $dom;
-    protected static $minifyCssHasBeenUsed = false;
-    protected static $minifyJavascriptHasBeenUsed = false;
+    /**
+     * Request attribute holding the minification state shared by the
+     * minify middlewares of a single request.
+     */
+    protected const STATE_ATTRIBUTE = '_fahlisaputra_minify_state';
+
+    /**
+     * Per-request state (DOM and which minifiers already ran).
+     *
+     * It must never be static: in long-running workers (Laravel Octane,
+     * Swoole, RoadRunner, FrankenPHP) static properties survive between
+     * requests, which would serve one user's page to the next requests.
+     *
+     * @var \stdClass
+     */
+    protected $state;
 
     protected static $isEnable;
     protected static $ignore;
@@ -33,10 +46,12 @@ abstract class Minifier
      */
     public function handle(Request $request, Closure $next)
     {
+        $this->state = $this->state($request);
+
         $response = $next($request);
 
         if (!$this->shouldProcessMinify($request, $response)) {
-            if (!(static::$dom instanceof DOMDocument)) {
+            if (!($this->state->dom instanceof DOMDocument)) {
                 return $response;
             }
         }
@@ -48,6 +63,25 @@ abstract class Minifier
         $this->loadDom($html);
 
         return $response->setContent($this->apply());
+    }
+
+    /**
+     * Get (or create) the minification state bound to the given request.
+     */
+    protected function state(Request $request): \stdClass
+    {
+        $state = $request->attributes->get(self::STATE_ATTRIBUTE);
+
+        if (!($state instanceof \stdClass)) {
+            $state = (object) [
+                'dom'                         => null,
+                'minifyCssHasBeenUsed'        => false,
+                'minifyJavascriptHasBeenUsed' => false,
+            ];
+            $request->attributes->set(self::STATE_ATTRIBUTE, $state);
+        }
+
+        return $state;
     }
 
     protected function replaceDirectives($html): string
@@ -163,21 +197,21 @@ abstract class Minifier
 
     protected function loadDom(string $html, bool $force = false)
     {
-        if (static::$dom instanceof DOMDocument) {
+        if ($this->state->dom instanceof DOMDocument) {
             if ($force) {
             } else {
                 return;
             }
         }
 
-        static::$dom = new DOMDocument();
-        @static::$dom->loadHTML($html, LIBXML_HTML_NODEFDTD | LIBXML_SCHEMA_CREATE);
+        $this->state->dom = new DOMDocument();
+        @$this->state->dom->loadHTML($html, LIBXML_HTML_NODEFDTD | LIBXML_SCHEMA_CREATE);
     }
 
     protected function getByTag(string $tags): array
     {
         $result = [];
-        $element = static::$dom->getElementsByTagName($tags);
+        $element = $this->state->dom->getElementsByTagName($tags);
 
         foreach ($element as $el) {
             $value = $el->nodeValue;
@@ -197,7 +231,7 @@ abstract class Minifier
     protected function getByTagOnlyIgnored(string $tags): array
     {
         $result = [];
-        $element = static::$dom->getElementsByTagName($tags);
+        $element = $this->state->dom->getElementsByTagName($tags);
 
         foreach ($element as $el) {
             $value = $el->nodeValue;

@@ -11,8 +11,8 @@ class MinifyHtml extends Minifier
         $ignoredCss = $this->getByTagOnlyIgnored('style');
         $ignoredJs = $this->getByTagOnlyIgnored('script');
 
-        if (static::$minifyCssHasBeenUsed && static::$minifyJavascriptHasBeenUsed) {
-            $html = $this->replace(static::$dom->saveHtml());
+        if ($this->state->minifyCssHasBeenUsed && $this->state->minifyJavascriptHasBeenUsed) {
+            $html = $this->replace($this->state->dom->saveHtml());
 
             if (empty($ignoredCss) || empty($ignoredCss)) {
                 return $html;
@@ -20,15 +20,15 @@ class MinifyHtml extends Minifier
 
             $this->loadDom($html, true);
         } else {
-            if (!static::$minifyCssHasBeenUsed) {
+            if (!$this->state->minifyCssHasBeenUsed) {
                 $css = $this->getByTag('style');
             }
 
-            if (!static::$minifyJavascriptHasBeenUsed) {
+            if (!$this->state->minifyJavascriptHasBeenUsed) {
                 $js = $this->getByTag('script');
             }
 
-            $html = $this->replace(static::$dom->saveHtml());
+            $html = $this->replace($this->state->dom->saveHtml());
 
             $this->loadDom($html, true);
 
@@ -47,7 +47,7 @@ class MinifyHtml extends Minifier
             $this->append('getByTagOnlyIgnored', 'script', $ignoredJs);
         }
 
-        return trim(static::$dom->saveHtml());
+        return trim($this->state->dom->saveHtml());
     }
 
     protected function append(string $function, string $tags, array $backup)
@@ -55,7 +55,7 @@ class MinifyHtml extends Minifier
         $index = 0;
         foreach ($this->{$function}($tags) as $el) {
             $el->nodeValue = '';
-            $el->appendChild(static::$dom->createTextNode($backup[$index]->nodeValue));
+            $el->appendChild($this->state->dom->createTextNode($backup[$index]->nodeValue));
             $index++;
         }
     }
