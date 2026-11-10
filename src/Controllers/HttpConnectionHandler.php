@@ -19,13 +19,24 @@ class HttpConnectionHandler
 
         $storage = config('minify.assets_storage', 'resources');
 
+        // null bytes are never valid in a path (realpath() throws on PHP 8+)
+        if (strpos($file, "\0") !== false) {
+            return abort(404);
+        }
+
         // remove slash or backslash from the beginning of the file path
         $file = ltrim($file, '/\\');
 
         // make sure the storage has trailing slash
         $file = base_path(rtrim($storage, '/').'/'.$file);
 
-        if (!file_exists($file)) {
+        // resolve "..", "." and symlinks, then only serve regular files that
+        // are inside the storage directory (prevents path traversal)
+        $storagePath = realpath(base_path(rtrim($storage, '/')));
+        $file = realpath($file);
+
+        if ($storagePath === false || $file === false || !is_file($file)
+            || strpos($file, rtrim($storagePath, '/\\').DIRECTORY_SEPARATOR) !== 0) {
             return abort(404);
         }
 
