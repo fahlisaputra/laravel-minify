@@ -108,7 +108,10 @@ The `minify()` helper function will automatically search the file in the `storag
 <link rel="stylesheet" href="{minify_route_path}/test.css">
 ```
 
-The `/storage/app/private/assets` directory is hidden from the public.
+The real path of the `/storage/app/private/assets` directory is not exposed in the URL.
+
+> [!IMPORTANT]
+> The assets route only serves `.css` and `.js` files located inside the `assets_storage` directory. Requests for any other file (for example Blade views, language files or logs), for paths outside that directory, or for symlinks that resolve outside of it return `404 Not Found`. For the best isolation, point `assets_storage` to a directory that contains only your CSS and JavaScript assets (such as `storage/app/private/assets`) instead of a broad directory like `storage`.
 
 ### Automatic Insert Semicolon on Javascript or CSS
 Use this option if Minify for Laravel makes your javascript or css not working properly. You can enable automatic insert semicolon on javascript or css by setting `true` on `insert_semicolon` in the `config/minify.php` file. For example:

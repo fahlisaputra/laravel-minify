@@ -19,6 +19,9 @@ class HttpConnectionHandler
 
         $storage = config('minify.assets_storage', 'resources');
 
+        // the {file?} route parameter is optional and may be null
+        $file = (string) $file;
+
         // null bytes are never valid in a path (realpath() throws on PHP 8+)
         if (strpos($file, "\0") !== false) {
             return abort(404);
@@ -40,25 +43,37 @@ class HttpConnectionHandler
             return abort(404);
         }
 
-        $content = file_get_contents($file);
-        $mime = 'text/plain';
+        // only css and js assets are served (issue #9). Any other file in the
+        // storage directory (blade views, lang files, logs, keys, ...) must not
+        // be readable through the public assets route. The extension is taken
+        // from the resolved path, so a symlink cannot disguise another file.
+        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+        $mimes = [
+            'css' => 'text/css',
+            'js'  => 'application/javascript',
+        ];
 
-        // due to support only for css and js (issue #9)
+        if (!isset($mimes[$extension])) {
+            return abort(404);
+        }
+
+        $content = file_get_contents($file);
+        $mime = $mimes[$extension];
+
         if ($enabled) {
-            if (preg_match("/\.css$/", $file)) {
+            if ($extension === 'css') {
                 $content = $css->replace($content, $css_insert_semicolon);
-                $mime = 'text/css';
-            } elseif (preg_match("/\.js$/", $file)) {
+            } else {
                 $content = $js->replace($content, $js_insert_semicolon);
                 if ($obfuscate) {
                     $content = $js->obfuscate($content);
                 }
-                $mime = 'application/javascript';
             }
         }
 
         return response($content, 200, [
-            'Content-Type' => $mime.'; charset=UTF-8',
+            'Content-Type'           => $mime.'; charset=UTF-8',
+            'X-Content-Type-Options' => 'nosniff',
         ]);
     }
 }

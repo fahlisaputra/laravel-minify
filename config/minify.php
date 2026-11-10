@@ -70,7 +70,10 @@ return [
     |
     | This option specifies the storage path to save the unminified assets.
     | You can modify this option to change the storage path. For example, you
-    | want to save the unminified assets in the `storage` directory.
+    | want to save the unminified assets in `storage/app/private/assets`.
+    |
+    | Only `.css` and `.js` files inside this directory are served by the
+    | assets route. Prefer a directory that contains only your assets.
     |
     | Default: resources
     |
